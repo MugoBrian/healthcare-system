@@ -13,6 +13,16 @@ return new class extends Migration
     {
         Schema::create('enrollments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('client_id')->constrained()->onDelete('cascade');
+            $table->foreignId('health_program_id')->constrained()->onDelete('cascade');
+            $table->date('enrollment_date');
+            $table->date('end_date')->nullable();
+            $table->enum('status', ['active', 'completed', 'withdrawn'])->default('active');
+            $table->text('notes')->nullable();
+            $table->timestamps();
+
+            // Prevent duplicate enrollments
+            $table->unique(['client_id', 'health_program_id', 'status']);
             $table->timestamps();
         });
     }
