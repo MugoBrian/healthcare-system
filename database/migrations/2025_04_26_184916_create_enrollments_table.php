@@ -23,7 +23,6 @@ return new class extends Migration
 
             // Prevent duplicate enrollments
             $table->unique(['client_id', 'health_program_id', 'status']);
-            $table->timestamps();
         });
     }
 
